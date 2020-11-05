@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<meta name="description" content="LCA_WIND_DK, a cradle-to-gate life cycle inventory tool for wind turbine fleets">
+<meta name="author" content="Romain Sacchi">
+<link rel="shortcut icon" href="{% static 'lca_wind_dk/icon/favicon.ico' %}">
+
+<title>Welcome to LCA_WIND_DK</title>
+<script>L_PREFER_CANVAS = false; L_NO_TOUCH = false; L_DISABLE_3D = false;</script>
+<script src="{% static 'lca_wind_dk/js/d3.v3.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/nv.d3.min.js' %}"></script>
+<link href="{% static 'lca_wind_dk/css/nv.d3.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'lca_wind_dk/js/tether.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/bootstrap.min.js' %}"></script>
+<link href="{% static 'lca_wind_dk/css/bootstrap.min.css' %}" rel="stylesheet"/> 
+<link href="{% static 'lca_wind_dk/css/custom_style.css' %}" rel="stylesheet"/>
+<script src=" {% static 'lca_wind_dk/js/general_data.js' %}"></script>
+<script src=" {% static 'lca_wind_dk/js/popup.js' %}"> </script>
+<script src=" {% static 'lca_wind_dk/js/grid_popup.js' %}"> </script>
+<script src=" {% static 'lca_wind_dk/js/life_cycle_grid.js' %}"> </script>
+<script src="{% static 'lca_wind_dk/js/leaflet.js' %}"></script>
+<link href="{% static 'lca_wind_dk/css/leaflet.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/easy-button.css' %}" rel="stylesheet"/>
+<script src="{% static 'lca_wind_dk/js/easy-button.js' %}"></script>
+<link href="{% static 'lca_wind_dk/css/leaflet-tag-filter-button.css' %}" rel="stylesheet"/>
+<script src="{% static 'lca_wind_dk/js/leaflet-tag-filter-button.js' %}"></script>
+<link href="{% static 'lca_wind_dk/css/bootstrap-theme.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/font-awesome.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/leaflet.awesome-markers.css' %}" rel="stylesheet"/>
+<script src="{% static 'lca_wind_dk/js/leaflet.markercluster.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/waitingModule.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/spin.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/leaflet.spin.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/leaflet-sidebar.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/rangeslider.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/radialIndicator.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/grid.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/uikit.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/Leaflet.Modal.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/nouislider.min.js' %}"></script>
+<script src="{% static 'lca_wind_dk/js/wNumb.js' %}"></script>
+
+
+<link href="{% static 'lca_wind_dk/css/contact_css.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/MarkerCluster.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/MarkerCluster.Default.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/leaflet-sidebar.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/rangeslider.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/bootstrap_vertical_tabs.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/leaflet.modal.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'lca_wind_dk/css/nouislider.css' %}" rel="stylesheet">
+    
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/css/uikit.min.css'>
+<script type="text/javascript">
+    DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+</script>
+
+ 
+<style>
+  html, body {width: 100%;height: 100%;margin: 0;padding: 0;}
+ 
+  #map {position:absolute;top:0;bottom:0;right:0;left:0;}
+ 
+  #map_34bf1f305baf46e8a57e83b84ec16d1a {
+                position : relative;
+                width : 100.0%;
+                height: 100.0%;
+                left: 0.0%;
+                top: 0.0%;
+                }
+ 
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+</style>
+    
+ 
+ </head>
+<body>
+    
+<div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            
+            <ul role="tablist">
+                
+                <li><a href="#home" role="tab"><i class="fa fa-bars" title="Presentation" id="button_1"></i></a></li>
+                <li><a href="#method" role="tab"><i class="fa fa-question-circle" title="Methods"></i></a></li>
+                <li><a href="#add" role="tab"><i class="fa fa-plus" title="Add a wind turbine"></i></a></li>
+                <li><a href="#contact" role="tab"><i class="fa fa-envelope" title="Get help"></i></a></li>
+                
+                <li><a>Loc</a></li>
+
+                <button class="btn btn-default active" data-toggle="button" aria-pressed="true" autocomplete="off" id="show_onshore">
+                        <img src="{% static 'lca_wind_dk/pictures/icons_onshore.png' %}" width="40" title="Onshore"/></button>
+                <button class="btn btn-default active" data-toggle="button" aria-pressed="true" autocomplete="off" id="show_offshore">
+                        <img src="{% static 'lca_wind_dk/pictures/icons_offshore.png' %}" width="40" title="Offshore"/></button>
+                
+                <li><a>Year</a></li>
+                
+                
+                <output id="slider_output" class="badge">2016</output>
+                <center>
+                    <input type="range" id="slider" min="1977" max="2030" value="2016" data-rangeslider data-orientation="vertical" >
+                </center>
+                
+    
+                <li><a>kW</a></li>
+       
+                <center>
+                <div id="slider_down" class="badge">10</div></center>
+                <div id="slider-vertical" style="margin-left:10px"></div>
+                <div id="slider_up" class="badge">8900</div>
+                
+                
+                
+            
+            </ul>
+            
+        </div>
+        
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    Welcome to <i>LCA_WIND_DK</i>
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                    <hr>
+                    <h3>Environmental footprint of wind turbines in Denmark.</h3>
+                    <hr>
+                    <p class="lorem">LCA_wind_DK is a visualization tool that displays environmental performance indicators for wind turbines in Denmark using life cycle assessment.</p>
+                <p class="lorem">The method used by this tool relies on the inclusion of <b>technological</b> parameters to determine the material and energy requirements to build, transport, erect, maintain and discard a wind turbine. It also accounts for <b>time</b> and <b>space</b>-related parameters that affects the performance of a wind turbine, such as the wind availability but also the year of manufacture and operation.</p>
+                    
+                <p class="lorem">Should you be interested in knowing more about time, geography and space-sensitive life cycle inventories of wind turbines:</p>
+                <p class="lorem">Romain Sacchi, Romain Besseau, Paula Pérez-López, Isabelle Blanc, <i>Exploring technologically, temporally and geographically-sensitive life cycle inventories for wind turbines: A parameterized model for Denmark</i>, Renewable Energy, Volume 132, 2019, Pages 1238-1250, ISSN 0960-1481, <a href="https://doi.org/10.1016/j.renene.2018.09.020" target="_blank">doi.org/10.1016/j.renene.2018.09.020</a>.</p>
+                <p class="lorem">and</p>
+                <p class="lorem">
+                    Romain Besseau, Romain Sacchi, Isabelle Blanc, Paula Pérez-López, <i>Past, present and future environmental footprint of the Danish wind turbine fleet with LCA_WIND_DK, an online interactive platform</i>, Renewable &amp; Sustainable Energy Reviews, online, 2019, <a href="https://doi.org/10.1016/j.rser.2019.03.030" target="_blank">doi.org/10.1016/j.rser.2019.03.030</a>. </p>
+                    
+            </div>
+            
+            <div class="sidebar-pane" id="add">
+                <h1 class="sidebar-header">
+                    Add one or several wind turbines.
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                    <hr>
+                    <h3>Instant energy and environmental characterization of additional wind turbines</h3>
+                    <hr>
+                <p class="lorem">An upcoming function will allow users to drag-and-drop additional wind turbines of various sizes, nominal power ranges, types, at different points in time and in various locations. It will return the expect electricity production and environmental footprint of the project. It will consider the influence of temporally, technologically and geographically-sensitive parameters set by the users on each step of the life cycle.</p>
+                    
+                
+     
+            </div>
+
+            <div class="sidebar-pane" id="contact">
+                <h1 class="sidebar-header">Developers<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <div class="container"> 
+                  <div class="at-grid" data-column="1">
+                    <div class="at-column">
+                      <div class="at-user">
+                        <div class="at-user__avatar"><img src="{% static 'lca_wind_dk/pictures/pic_ros.png' %}"/></div>
+                        <div class="at-user__name">Romain Sacchi</div>
+                        <div class="at-user__title">Researcher</div>
+                          <div class="at-user__title">Aalborg University</div>
+                        <ul class="at-social">
+                            <li class="at-social__item"><a href="mailto:r_s@me.com">
+                              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="-2 -2.5 30 25" style="enable-background:new -2 -2.5 30 25;" xml:space="preserve" width="18" height="18">
+                            <style type="text/css">
+                                .st0{fill:#7C7D81;}
+                            </style>
+                            <g>
+                                <path class="st0" d="M13.1,8.6l12.6-9.3H0.1l12.6,9.3C12.9,8.7,13,8.7,13.1,8.6z"></path>
+                                <path class="st0" d="M14.4,10.4c-0.5,0.3-0.9,0.5-1.5,0.5s-1-0.1-1.5-0.5L-1.3,0.9v18.5c0,0.8,0.7,1.5,1.5,1.5h25.8
+                                                     c0.8,0,1.5-0.7,1.5-1.5V0.9L14.4,10.4z"></path>
+                            </g>
+                            </svg>
+                            </a></li>
+                          <li class="at-social__item"><a href="https://www.linkedin.com/in/romainsacchi" target="_blank">
+                              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.547 3c.406 0 .75.133 1.031.398.281.266.422.602.422 1.008v15.047c0 .406-.14.766-.422 1.078a1.335 1.335 0 0 1-1.031.469h-15c-.406 0-.766-.156-1.078-.469C3.156 20.22 3 19.86 3 19.453V4.406c0-.406.148-.742.445-1.008C3.742 3.133 4.11 3 4.547 3h15zM8.578 18V9.984H6V18h2.578zM7.36 8.766c.407 0 .743-.133 1.008-.399a1.31 1.31 0 0 0 .399-.96c0-.407-.125-.743-.375-1.009C8.14 6.133 7.813 6 7.406 6c-.406 0-.742.133-1.008.398C6.133 6.664 6 7 6 7.406c0 .375.125.696.375.961.25.266.578.399.984.399zM18 18v-4.688c0-1.156-.273-2.03-.82-2.624-.547-.594-1.258-.891-2.133-.891-.938 0-1.719.437-2.344 1.312V9.984h-2.578V18h2.578v-4.547c0-.312.031-.531.094-.656.25-.625.687-.938 1.312-.938.875 0 1.313.578 1.313 1.735V18H18z" fill-rule="evenodd"></path>
+                              </svg></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="at-column">
+                      <div class="at-user">
+                        <div class="at-user__avatar"><img src="{% static 'lca_wind_dk/pictures/pic_rob.jpg' %}"/></div>
+                        <div class="at-user__name">Romain Besseau</div>
+                        <div class="at-user__title">Ph.D. student</div>
+                          <div class="at-user__title">O.I.E. Paris MinesTech</div>
+                        <ul class="at-social">
+                            <li class="at-social__item"><a href="mailto:romain.besseau@mines-paristech.fr">
+                              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="-2 -2.5 30 25" style="enable-background:new -2 -2.5 30 25;" xml:space="preserve" width="18" height="18">
+                            <style type="text/css">
+                                .st0{fill:#7C7D81;}
+                            </style>
+                            <g>
+                                <path class="st0" d="M13.1,8.6l12.6-9.3H0.1l12.6,9.3C12.9,8.7,13,8.7,13.1,8.6z"></path>
+                                <path class="st0" d="M14.4,10.4c-0.5,0.3-0.9,0.5-1.5,0.5s-1-0.1-1.5-0.5L-1.3,0.9v18.5c0,0.8,0.7,1.5,1.5,1.5h25.8
+                                                     c0.8,0,1.5-0.7,1.5-1.5V0.9L14.4,10.4z"></path>
+                            </g>
+                            </svg>
+                            </a></li>
+                          <li class="at-social__item"><a href="https://www.linkedin.com/in/romain-besseau-67450490" target="_blank">
+                              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.547 3c.406 0 .75.133 1.031.398.281.266.422.602.422 1.008v15.047c0 .406-.14.766-.422 1.078a1.335 1.335 0 0 1-1.031.469h-15c-.406 0-.766-.156-1.078-.469C3.156 20.22 3 19.86 3 19.453V4.406c0-.406.148-.742.445-1.008C3.742 3.133 4.11 3 4.547 3h15zM8.578 18V9.984H6V18h2.578zM7.36 8.766c.407 0 .743-.133 1.008-.399a1.31 1.31 0 0 0 .399-.96c0-.407-.125-.743-.375-1.009C8.14 6.133 7.813 6 7.406 6c-.406 0-.742.133-1.008.398C6.133 6.664 6 7 6 7.406c0 .375.125.696.375.961.25.266.578.399.984.399zM18 18v-4.688c0-1.156-.273-2.03-.82-2.624-.547-.594-1.258-.891-2.133-.891-.938 0-1.719.437-2.344 1.312V9.984h-2.578V18h2.578v-4.547c0-.312.031-.531.094-.656.25-.625.687-.938 1.312-.938.875 0 1.313.578 1.313 1.735V18H18z" fill-rule="evenodd"></path>
+                              </svg></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="at-column">
+                      <div class="at-user">
+                        <div class="at-user__avatar"><img src="{% static 'lca_wind_dk/pictures/pic_pap.png' %}"/></div>
+                        <div class="at-user__name">Paula Pérez-López</div>
+                        <div class="at-user__title">Researcher</div>
+                          <div class="at-user__title">O.I.E. Paris MinesTech</div>
+                        <ul class="at-social">
+                            <li class="at-social__item"><a href="mailto:paula.perez_lopez@mines-paristech.fr">
+                              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="-2 -2.5 30 25" style="enable-background:new -2 -2.5 30 25;" xml:space="preserve" width="18" height="18">
+                            <style type="text/css">
+                                .st0{fill:#7C7D81;}
+                            </style>
+                            <g>
+                                <path class="st0" d="M13.1,8.6l12.6-9.3H0.1l12.6,9.3C12.9,8.7,13,8.7,13.1,8.6z"></path>
+                                <path class="st0" d="M14.4,10.4c-0.5,0.3-0.9,0.5-1.5,0.5s-1-0.1-1.5-0.5L-1.3,0.9v18.5c0,0.8,0.7,1.5,1.5,1.5h25.8
+                                                     c0.8,0,1.5-0.7,1.5-1.5V0.9L14.4,10.4z"></path>
+                            </g>
+                            </svg>
+                            </a></li>
+                          <li class="at-social__item"><a href="https://www.linkedin.com/in/paulaperezlopez" target="_blank">
+                              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.547 3c.406 0 .75.133 1.031.398.281.266.422.602.422 1.008v15.047c0 .406-.14.766-.422 1.078a1.335 1.335 0 0 1-1.031.469h-15c-.406 0-.766-.156-1.078-.469C3.156 20.22 3 19.86 3 19.453V4.406c0-.406.148-.742.445-1.008C3.742 3.133 4.11 3 4.547 3h15zM8.578 18V9.984H6V18h2.578zM7.36 8.766c.407 0 .743-.133 1.008-.399a1.31 1.31 0 0 0 .399-.96c0-.407-.125-.743-.375-1.009C8.14 6.133 7.813 6 7.406 6c-.406 0-.742.133-1.008.398C6.133 6.664 6 7 6 7.406c0 .375.125.696.375.961.25.266.578.399.984.399zM18 18v-4.688c0-1.156-.273-2.03-.82-2.624-.547-.594-1.258-.891-2.133-.891-.938 0-1.719.437-2.344 1.312V9.984h-2.578V18h2.578v-4.547c0-.312.031-.531.094-.656.25-.625.687-.938 1.312-.938.875 0 1.313.578 1.313 1.735V18H18z" fill-rule="evenodd"></path>
+                              </svg></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    
+                    <div class="at-column">
+                      <div class="at-user">
+                        <div class="at-user__avatar"><img src="{% static 'lca_wind_dk/pictures/pic_isb.jpg' %}"/></div>
+                        <div class="at-user__name">Isabelle Blanc</div>
+                        <div class="at-user__title">Professor/Researcher</div>
+                          <div class="at-user__title">O.I.E. Paris MinesTech</div>
+                        <ul class="at-social">
+                            <li class="at-social__item"><a href="mailto:isabelle.blanc@mines-paristech.fr">
+                              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="-2 -2.5 30 25" style="enable-background:new -2 -2.5 30 25;" xml:space="preserve" width="18" height="18">
+                            <style type="text/css">
+                                .st0{fill:#7C7D81;}
+                            </style>
+                            <g>
+                                <path class="st0" d="M13.1,8.6l12.6-9.3H0.1l12.6,9.3C12.9,8.7,13,8.7,13.1,8.6z"></path>
+                                <path class="st0" d="M14.4,10.4c-0.5,0.3-0.9,0.5-1.5,0.5s-1-0.1-1.5-0.5L-1.3,0.9v18.5c0,0.8,0.7,1.5,1.5,1.5h25.8
+                                                     c0.8,0,1.5-0.7,1.5-1.5V0.9L14.4,10.4z"></path>
+                            </g>
+                            </svg>
+                            </a></li>
+                          <li class="at-social__item"><a href="https://www.linkedin.com/in/iblanc" target="_blank">
+                              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.547 3c.406 0 .75.133 1.031.398.281.266.422.602.422 1.008v15.047c0 .406-.14.766-.422 1.078a1.335 1.335 0 0 1-1.031.469h-15c-.406 0-.766-.156-1.078-.469C3.156 20.22 3 19.86 3 19.453V4.406c0-.406.148-.742.445-1.008C3.742 3.133 4.11 3 4.547 3h15zM8.578 18V9.984H6V18h2.578zM7.36 8.766c.407 0 .743-.133 1.008-.399a1.31 1.31 0 0 0 .399-.96c0-.407-.125-.743-.375-1.009C8.14 6.133 7.813 6 7.406 6c-.406 0-.742.133-1.008.398C6.133 6.664 6 7 6 7.406c0 .375.125.696.375.961.25.266.578.399.984.399zM18 18v-4.688c0-1.156-.273-2.03-.82-2.624-.547-.594-1.258-.891-2.133-.891-.938 0-1.719.437-2.344 1.312V9.984h-2.578V18h2.578v-4.547c0-.312.031-.531.094-.656.25-.625.687-.938 1.312-.938.875 0 1.313.578 1.313 1.735V18H18z" fill-rule="evenodd"></path>
+                              </svg></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-pane" id="method">
+                <h1 class="sidebar-header">Methods and data<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <hr>
+                    <hr>
+                    <h3>Data sources</h3>
+                    <hr>
+                    <p class="lorem">The past, current and future composition of the fleet of wind turbines in Denmark relies on listings contained in the <a href="https://ens.dk/sites/ens.dk/files/Statistik/anlaegprodtilnettet.xls">Danish registry of wind turbines</a>, made available by the Ministry of Energy. The registry also gives the annual electricity production of each wind turbine that has or is being operated. Future electricity production has been estimated from the power curve of the wind turbine and projected wind availbility, using the re-analysis model <a href="https://gmao.gsfc.nasa.gov/reanalysis/MERRA-2/">MERRA-2</a>.</p>
+                    <p class="lorem">The material and energy requirements to build the inventory of wind turbines are mostly based on manufacturers data, synthesized in the <a href="https://www.thewindpower.net/index.php">TheWindPower database</a>, as well as the life cycle inventory database <a href="https://www.ecoinvent.org/">ecoinvent</a>. Scaling models are used when manufacturers data is not available.</p>
+                    <hr>
+                    <h3>Tool</h3>
+                    <hr>
+                    <p class="lorem">The life cycle assessment tool <a href="https://brightwaylca.org/">Brightway2</a> is used to calculate the material and energy requirements for each wind turbine along its life cycle.</p>
+                    
+                    <hr>
+                    <h3>Impact characterization</h3>
+                    <hr>
+                    <p class="lorem">Energy and material requirements are normalized down to a kilowatt-hour of electricity and characterized against different impact assessment methods: IPCC's Global Warming Potential (referred here as "Carbon footprint"), ILCD's Minerals resource depletion as well as the Energy payback ratio.</p>
+                    <hr>
+                    <h3>Web tools</h3>
+                    <hr>
+                    <p class="lorem">The javascript interactive map library <a href="https://leafletjs.com/">Leaflet</a> is used to map out the wind turbines.</p>
+                    <p class="lorem">The web framework <a href="https://www.djangoproject.com/">Django</a> is used to generate and serve results at the users' request.</p>
+                    
+                <h3>Publications</h3>
+                    <hr>
+                    <p class="lorem">An in-depth description of the approach and tools used is available in the following publications:</p>
+                <p class="lorem">Romain Sacchi, Romain Besseau, Paula Pérez-López, Isabelle Blanc, <i>Exploring technologically, temporally and geographically-sensitive life cycle inventories for wind turbines: A parameterized model for Denmark</i>, Renewable Energy, Volume 132, 2019, Pages 1238-1250, ISSN 0960-1481, <a href="https://doi.org/10.1016/j.renene.2018.09.020" target="_blank">doi.org/10.1016/j.renene.2018.09.020</a>.</p>
+                <p class="lorem">and</p>
+                <p class="lorem">Romain Besseau, Romain Sacchi, Isabelle Blanc, Paula Pérez-López, <i>Past, present and future environmental footprint of the Danish wind turbine fleet with LCA_WIND_DK, an online interactive platform</i>, Renewable &amp; Sustainable Energy Reviews, online, 2019. </p>
+                
+            </div>
+
+            
+        </div>
+    </div>
+      
+ <div id="map_34bf1f305baf46e8a57e83b84ec16d1a">
+    </div>
+
+<script>
+    var year;
+    var bounds = null;
+    var map_34bf1f305baf46e8a57e83b84ec16d1a = L.map(
+                                  'map_34bf1f305baf46e8a57e83b84ec16d1a',
+                                  {center: [56.2,9.3],
+                                  zoom: 8,
+                                  maxBounds: bounds,
+                                  layers: [],
+                                  worldCopyJump: false,
+                                  crs: L.CRS.EPSG3857
+                                 });
+
+    var tile_layer_d67b63afbada4f59bd11c2802ae007c3 = L.tileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                "attribution": null,
+                "detectRetina": false,
+                "maxZoom": 18,
+                "minZoom": 1,
+                "noWrap": false,
+                "subdomains": "abc"
+                }).addTo(map_34bf1f305baf46e8a57e83b84ec16d1a);
+    
+    
+    
+                var cluster;
+            get_min_max= function(year, on_off){
+                $.ajax({
+                        url: "get_min_max/"+year+"/"+on_off,
+                        dataType: 'json',
+                        type: 'GET',
+                        error: function(xhr,errmsg,err){
+                            alert('error; '+ err);
+                        },
+                        success : function(data) {
+                            
+                                min_p=data[0];
+                                max_p=data[1];
+                                
+                            if (!data[1]==0){
+                                // At first initalization, we display all wind turbines of the given year
+                                initialize_markers(year, min_p, max_p, on_off);
+                                
+                            }else{
+                                alert("There does not seem to be any wind turbines for the filter parameters you have applied.")
+                            };
+                            
+                            var verticalSlider = document.getElementById('slider-vertical');
+                            verticalSlider.noUiSlider.updateOptions({range:{"min":min_p-1, "max":max_p+1}});
+                     
+                        },
+                      timeout: 10000}
+                      );
+            };
+    
+            initialize_markers = function(year, min_p, max_p, on_off){
+                
+                
+                var map = map_34bf1f305baf46e8a57e83b84ec16d1a;
+                cluster = L.markerClusterGroup();
+                
+                var callback = function (row, popup) {
+                    var icon, marker;
+                    popup = (popup === undefined) ? null: popup;
+                    // Returns a L.marker object
+                    icon = L.icon({
+                        iconUrl: "{% static 'lca_wind_dk/pictures/wind_turbine_icon.gif' %}", iconSize: [70, 80],  iconAnchor: [40, 94], shadowAnchor: [4, 62], popupAnchor: [-3, -76]});
+                    marker = L.marker(new L.LatLng(row["lat"], row["lon"]));
+                    marker.setIcon(icon);
+                    marker.title = row["uuid"];
+                    return marker;
+                    };
+                
+                map_34bf1f305baf46e8a57e83b84ec16d1a.spin(true);
+                data=$.ajax({
+                        url: "get_markers/"+year+"/"+min_p+"/"+max_p+"/"+on_off,
+                        dataType: 'json',
+                        type: 'GET',
+                        error: function(xhr,errmsg,err){
+                            alert('error; '+ err);
+                        },
+                        success : function(data) {
+                            var arr=[];
+                            Object.keys(data).forEach(function(k) {
+                                arr.push({uuid:k, lon: data[k]["lon"], lat: data[k]["lat"]});
+                                })
+                             for (var i = 0; i < arr.length; i++) {
+                                var row = arr[i];
+                                var marker = callback(row, popup="None");
+                                marker.addTo(cluster);
+                                marker.bindPopup(function(e, year){return build_popup(e, min_p, max_p, on_off)}, {minWidth:1200}).on('click', clickZoom);
+                                }
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.spin(false);
+                        },
+                      timeout: 10000}
+                      );
+                    cluster.addTo(map);
+                    cluster.refreshClusters();
+                    
+                    var sidebar = L.control.sidebar('sidebar').addTo(map);
+                generate_graph_time(on_off);
+            };
+    
+            function build_popup(e, min_p, max_p, on_off){
+                var coordinates=e.getLatLng()["lat"].toFixed(3)+", "+e.getLatLng()["lng"].toFixed(3)
+                return add_popup(e.title, year, coordinates, min_p, max_p, on_off)
+            };
+            
+            function clickZoom(e) {
+                
+	           map_34bf1f305baf46e8a57e83b84ec16d1a.setView({"lat":e.target.getLatLng()["lat"]+0.0056, "lng":e.target.getLatLng()["lng"]},16);
+            }
+
+            $(document).ready(function() {
+                year=2016;
+
+                var min_p;
+                var max_p;
+                var on_off="ALL";
+                
+                // We retreive min and max power values
+                get_min_max(year, on_off);
+                
+                var verticalSlider = document.getElementById('slider-vertical');
+                    verticalSlider.style.height = '240px';
+                    noUiSlider.create(verticalSlider, {
+	                   start: [0, 10000],
+                        connect: true,
+	                   orientation: 'vertical',
+	                   range: {
+		                      'min': 0,
+		                      'max': 10000
+	                           },
+                        format: wNumb({
+		                  decimals: 0,
+		                  
+	                       })
+               });
+                
+                $('#show_onshore').on('click', function (e) {
+                      
+                    // if onshore button active
+                    if (!$(this).hasClass("active")){
+                        
+                    //  if offshore button active
+                        if ($('#show_offshore').hasClass("active")){
+                            
+                    //      then ALL
+                            on_off="ALL"
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster)
+                            get_min_max(year, on_off);
+                        }
+                        else{
+                            on_off="ON"
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster)
+                            get_min_max(year, on_off);
+                        };
+                    }
+                    else{
+                        if ($('#show_offshore').hasClass("active")){
+                            on_off="OFF"
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster)
+                            get_min_max(year, on_off);
+                        }
+                        else{
+                            alert("You need to select at least one type of location.")
+                            on_off="ON"
+                            
+                        };
+                    }});
+                    
+                    
+                $('#show_offshore').on('click', function (e) {
+                    
+                    
+                    // if offshore button active
+                    if (!$(this).hasClass("active")){
+                    //  if onshore button active
+                        if ($('#show_onshore').hasClass("active")){
+                    //      then ALL
+                            on_off="ALL"
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster)
+                            get_min_max(year, on_off);
+                        }
+                        else{
+                    //  else OFF
+                            on_off="OFF"
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster)
+                            get_min_max(year, on_off);
+                        };
+                    }
+                    else{
+                        //  offshore button inactive
+                        // if onshore button active
+                        if ($('#show_onshore').hasClass("active")){
+                    //      then ON
+                            on_off="ON"
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster)
+                            get_min_max(year, on_off);
+                        }
+                        else{
+                            // Warning: one type of location needs to be selected
+                            alert("You need to select at least one type of location.")
+                            on_off="None"
+                            
+                        };
+                    }});
+                
+                
+                $('#slider').rangeslider(
+                        {polyfill : false,
+                         onSlide: function(position, value) {
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster);
+                             var output = document.getElementById('slider_output');
+                                output.innerHTML = value;
+                            },
+                        // Callback function
+                        onSlideEnd: function(position, value) {
+                            map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster);
+                            year=value;
+                            get_min_max(year, on_off);
+                                    }});
+                             
+            map_34bf1f305baf46e8a57e83b84ec16d1a.openModal({
+
+                content: '<center><h1>Welcome to LCA_WIND_DK</h1></center>' +
+                            '<h2>Hello,</h2>'+
+                            '<p class="centered">-- a few words to explain what this website is about and how to use it.</p>' +
+                            '<p class="centered">Behind is displayed a map of Denmark with all the wind turbines currently in operation.</p> <p>The user can also decide which wind turbines to display by selecting a year of operation (from 1978 to 2030), a type of wind turbine (onshore, offshore or both) as well as an interval for the nominal power output (in kW). The user can click on any specific wind turbine in order to see its environmental performance and compare it to other wind turbines within the given set of display filters.</p>'+
+                            '<p class="centered">This website  displays environmental and energy statistics on every wind turbine that has, is or will likely be operating in Denmark, using a tool called <a target="_blank" href="https://en.wikipedia.org/wiki/Life-cycle_assessment">Life Cycle Assessment</a> (LCA). Using LCA, we have characterized the environmental footprint of producing one kilowatt-hour of electricity before distribution considering the relevant impacts associated to the different phases of the life of a wind turbine: its conception, installation, maintenance and disposal. Moreover, we have also considered important factors of geographical, temporal and technological nature, such as, among others:<ul><li>the precise location of wind turbines at sea (to size foundations according to sea depth),</li><li>the time of conception (to select the right electricity mix or recycled steel content used for assembly)</li><li>or the model of wind turbine (to properly diemension the components weight, based on manufacturer specifications).</li></ul></p>'+
+                            "<p class='centered'>The toolbar placed on the left-hand side allows to:</p>"+
+                            '<ul><li>know more about the method we used (<i class="fa fa-question-circle"></i>),</li><li>add an additional wind turbine and check out its potential performance (<i class="fa fa-plus"></i>) (upcoming feature),</li><li>write to us (<i class="fa fa-envelope"></i>),</li><li>as well as three types of display filters: the type of location (onshore <img src="{% static 'lca_wind_dk/pictures/icons_onshore.png' %}" width="10" title="Offshore"/>/offshore <img src="{% static 'lca_wind_dk/pictures/icons_offshore.png' %}" width="10" title="Offshore"/>), the reference year (Year) and the nominal power output interval (kW).</li></ul>'+
+                            '<p class="centered">We hope you will enjoy using LCA_WIND_DK.</p>' 
+                
+                            ,        // HTML string
+                closeTitle: 'close',                 // alt title of the close button
+                zIndex: 10000,                       // needs to stay on top of the things
+                transitionDuration: 300,             // expected transition duration
+                template: '{content}',               // modal body template, this doesn't include close button and wrappers
+                OVERLAY_CLS: 'overlay',              // overlay(backdrop) CSS class
+                MODAL_CLS: 'modal',                  // all modal blocks wrapper CSS class
+                MODAL_CONTENT_CLS: 'modal-content',  // modal window CSS class
+                INNER_CONTENT_CLS: 'modal-inner',    // inner content wrapper
+                SHOW_CLS: 'show',                    // `modal open` CSS class, here go your transitions
+                CLOSE_CLS: 'close'                   // `x` button CSS class
+                });
+            
+            
+            
+            verticalSlider.noUiSlider.on("end", function(){
+                var low_bound = document.getElementById('slider_down');
+                    low_bound.innerHTML = verticalSlider.noUiSlider.get()[0];
+                var up_bound = document.getElementById('slider_up');
+                    up_bound.innerHTML = verticalSlider.noUiSlider.get()[1];
+                map_34bf1f305baf46e8a57e83b84ec16d1a.removeLayer(cluster);
+                initialize_markers(year, low_bound.innerHTML, up_bound.innerHTML, on_off);
+            });
+            verticalSlider.noUiSlider.on("update", function(){
+                var low_bound = document.getElementById('slider_down');
+                    low_bound.innerHTML = verticalSlider.noUiSlider.get()[0];
+                var up_bound = document.getElementById('slider_up');
+                    up_bound.innerHTML = verticalSlider.noUiSlider.get()[1];
+            });
+            
+            
+            });
+            $(function () {
+                $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+                window.dispatchEvent(new Event('resize'))
+                        })
+                    }); 
+
+var static_url = "{% static  'lca_wind_dk' %}";
+
+    
+</script>
+</body>
+
+</html>

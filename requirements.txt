@@ -1,0 +1,5 @@
+scipy
+pandas
+Django
+numpy
+django-clear-cache
