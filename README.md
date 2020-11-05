@@ -1,4 +1,6 @@
 # lca_wind_dk-web-app
+
+![](https://github.com/romainsacchi/lca_wind_dk-web-app/blob/main/lca_wind_dk/static/lca_wind_dk/pictures/screenshot.png)
  
  Django application that runs behind http://viewer.webservice-energy.org/lca-wind-dk/
  
